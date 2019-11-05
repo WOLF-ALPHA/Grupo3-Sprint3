@@ -1,7 +1,7 @@
 enable
 configure terminal
-hostname SW-CORE
-banner motd "SOMENTE PESSOAL AUTORIZADO"
+hostname SW-CORE-GRPO3
+banner motd "SOMENTE PESSOAS DA CASA STARK"
 enable secret SenhadaEnable
 service password-encryption
 crypto key generate rsa general-key modulus 1024
@@ -20,25 +20,30 @@ exec-timeout 5
 exit 
 ip default-gateway 192.168.252.1
 vlan 13
-name vlanGP3
+name VLAN13
 vlan 103
-name Equipamentos
+name VLAN103
 interface vlan 103
 ip address 192.168.252.254 255.255.255.0
 description INTERFACE DE GERENCIAMENTO 
 exit
-interface fastethernet 0/3
+interface f0/16
+switchport mode access 
+switchport acces vlan 103
+description TRUNK - SRV-01-PT1
+exit
+interface f0/3
 switchport mode trunk 
-switchport trunk allowed vlan 13,103
-switchport trunk native vlan 103
-description INTERFACE TRUNK
+switchport trunk native vlan 99
+switchport trunk allowed vlan 13,99,103
+description TRUNK SW-GRPO3
 no shutdown
 exit
-interface fastethernet 0/24
+interface fastethernet 0/11
 switchport mode trunk 
-switchport trunk allowed vlan 13,103
-switchport trunk native vlan 103
+switchport trunk native vlan 99
+switchport trunk allowed vlan 13,99,103
+description TRUNK RT-02
 no shutdown
-description INTERFACE TRUNK
 exit
 do wr
