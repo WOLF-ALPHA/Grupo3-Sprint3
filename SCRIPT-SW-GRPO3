@@ -1,0 +1,47 @@
+enable
+configure terminal
+hostname SW-GRP3
+banner motd "SOMENTE PESSOAS DA CASA STARK"
+enable secret SenhadaEnable
+service password-encryption
+crypto key generate rsa general-key modulus 1024
+username JoaoSilva privilege 15 secret 12345678
+username GuilhermeCastro privilege 15 secret 12345678
+username LucasCoutinho privilege 15 secret 12345678
+username ElisafSilva privilege 15 secret 12345678
+line console 0
+password SenhadaConsole
+login
+exit
+line vty 0 15
+transport input ssh
+login local
+exec-timeout 5
+exit 
+ip default-gateway 192.168.252.1
+vlan 13
+name VLAN13
+vlan 103
+name VLAN103
+interface vlan 103
+ip address 192.168.252.253 255.255.255.0
+description INTERFACE DE GERENCIAMENTO 
+exit
+interface f0/1
+switchport mode access 
+switchport acces vlan 13
+description PC-01
+exit
+interface f0/2
+switchport mode access 
+switchport acces vlan 13
+description PC-01
+exit
+interface fastethernet 0/3
+switchport mode trunk 
+switchport trunk native vlan 99
+switchport trunk allowed vlan 13,99,103
+description TRUNK SW-GRPO3
+no shutdown
+exit
+do wr
