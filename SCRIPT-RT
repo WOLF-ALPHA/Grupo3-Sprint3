@@ -1,0 +1,38 @@
+enable
+configure terminal
+hostname RT-02
+banner motd "SOMENTE PESSOAL AUTORIZADO"
+enable secret SenhadaEnable
+service password-encryption
+ip domain-name grupo3.local
+crypto key generate rsa general-key modulus 1024
+username JoaoSilva privilege 15 secret 12345678
+username GuilhermeCastro privilege 15 secret 12345678
+username LucasCoutinho privilege 15 secret 12345678
+username ElisafSilva privilege 15 secret 12345678
+login block-for 240 attempts 7 within 600
+security passwords min-length 8
+line console 0
+password SenhadaConsole
+login
+exit
+line vty 0 15
+transport input ssh
+login local
+exec-timeout 5
+exit
+interface gigabitEthernet 0/1
+no shutdown
+exit
+interface gigabitEthernet 0/1.13
+encapsulation dot1Q 13
+ip address 192.168.13.1 255.255.255.0
+ip helper-address 192.168.252.5 
+description VLAN13
+exit
+interface gigabitEthernet 0/1.103
+encapsulation dot1Q 103
+ip address 192.168.252.1 255.255.255.0
+ip helper-address 192.168.252.5 
+description VLAN103
+do wr
