@@ -1,0 +1,44 @@
+enable
+configure terminal
+hostname SW-CORE
+banner motd "SOMENTE PESSOAL AUTORIZADO"
+enable secret SenhadaEnable
+service password-encryption
+crypto key generate rsa general-key modulus 1024
+username JoaoSilva privilege 15 secret 12345678
+username GuilhermeCastro privilege 15 secret 12345678
+username LucasCoutinho privilege 15 secret 12345678
+username ElisafSilva privilege 15 secret 12345678
+line console 0
+password SenhadaConsole
+login
+exit
+line vty 0 15
+transport input ssh
+login local
+exec-timeout 5
+exit 
+ip default-gateway 192.168.252.1
+vlan 13
+name vlanGP3
+vlan 103
+name Equipamentos
+interface vlan 103
+ip address 192.168.252.254 255.255.255.0
+description INTERFACE DE GERENCIAMENTO 
+exit
+interface fastethernet 0/3
+switchport mode trunk 
+switchport trunk allowed vlan 13,103
+switchport trunk native vlan 103
+description INTERFACE TRUNK
+no shutdown
+exit
+interface fastethernet 0/24
+switchport mode trunk 
+switchport trunk allowed vlan 13,103
+switchport trunk native vlan 103
+no shutdown
+description INTERFACE TRUNK
+exit
+do wr
