@@ -53,8 +53,8 @@ interface gigabitEthernet 0/1.14
 encapsulation dot1q 14
 ip address 192.168.14.1 255.255.255.0
 description VLAN 14
-exit
 ip helper-address 192.168.251.5
+exit
 interface gigabitEthernet 0/1.104
 encapsulation dot1q 104
 ip address 192.168.251.1 255.255.255.0
