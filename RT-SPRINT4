@@ -1,0 +1,75 @@
+enable
+configure terminal
+hostname RT-02
+banner motd "ACESSO APENAS PARA PESSOAS AUTORIZADAS!"
+enable secret SenhadaEnable
+ip domain-name sprint3.local
+crypto key generate rsa general-keys modulus 1024
+username joaoabreu privilege 15 secret joaoabreu
+username gabrielpereira privilege 15 secret gabrielpereira
+username lucasrodrigues privilege 15 secret lucasrodrigues
+username paulojunior privilege 15 secret paulojunior
+username PedroLucca privilege 15 secret SenhaLucca
+username AndreJesus privilege 15 secret SenhaJesus
+username KevinWitt privilege 15 secret SenhaWitt
+username MarcosTeles privilege 15 secret SenhaTeles
+username JoaoSilva privilege 15 secret JoaoSilva1
+username GuilhermeCastro privilege 15 secret GuilhermeCastro1
+username LucasCoutinho privilege 15 secret LucasCoutinho1
+username ElisafSilva privilege 15 secret ElisafSilva1
+username juliolima privilege 15 secret SenhaJulio
+username andrecaires privilege 15 secret SenhaCaires
+username leonardomanhani privilege 15 secret SenhaLeonardo
+username henrique privilege 15 secret SenhaHenrique
+username erickgrupo5 privilege 15 secret erick123
+username joaogrupo5 privilege 15 secret joao1234
+username viniciusgrupo5 privilege 15 secret vinicius123
+username thomasgrupo5 privilege 15 secret thomas123
+username FabricioGomes privilege 15 secret Gomes
+username FagnerSantos privilege 15 secret Santos
+username FernandoOliveira privilege 15 secret Oliveira
+username HigorSa privilege 15 secret SaHigor
+username Cleiton privilege 15 secret Cleiton@15
+username Rafael privilege 15 secret Rafael@15
+username Caio privilege 15 secret Caio@155
+username Alex privilege 15 secret Alex@155
+username Wanderson.Santos privilege 15 secret Wanderson@15
+username Willian.Ladeira privilege 15 secret Willian@15
+username Rai.alves privilege 15 secret Rai@15
+username Gabriel.Silva privilege 15 secret Gabriel@15
+line console 0
+password SenhadaConsole
+login
+exit
+line vty 0 15
+transport input ssh
+exec-timeout 5
+login local
+exit
+service password-encryption
+interface gigabitEthernet 0/1
+no shutdown
+interface gigabitEthernet 0/1.14
+encapsulation dot1q 14
+ip address 192.168.14.1 255.255.255.0
+description VLAN 14
+exit
+ip helper-address 192.168.251.5
+interface gigabitEthernet 0/1.104
+encapsulation dot1q 104
+ip address 192.168.251.1 255.255.255.0
+description VLAN 104
+ip helper-address 192.168.251.5
+exit
+interface gigabitEthernet 0/1.13
+encapsulation dot1Q 13
+ip address 192.168.13.1 255.255.255.0
+ip helper-address 192.168.252.5 
+description VLAN13
+exit
+interface gigabitEthernet 0/1.103
+encapsulation dot1Q 103
+ip address 192.168.252.1 255.255.255.0
+ip helper-address 192.168.252.5 
+description VLAN103
+do wr 
