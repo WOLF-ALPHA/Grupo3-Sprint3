@@ -1,0 +1,58 @@
+enable
+configure terminal
+hostname SW-ELIASAF-SILVA
+banner motd "SOMENTE PESSOAS AUTORIZADAS"
+enable secret SenhadaEnable
+service password-encryption
+crypto key generate rsa general-key modulus 1024
+username eliasafSilva privilege 15 secret eliasafsilva1
+line console 0
+password SenhadaConsole
+login local
+exit
+line vty 0 15
+transport input ssh
+login local
+exec-timeout 5
+exit 
+ip default-gateway 122.16.20.1
+vlan 782
+name VLAN782
+vlan 783
+name VLAN783
+vlan 784
+name VLAN784
+vlan 785
+name VLAN785
+interface vlan 785
+ip address 172.16.20.252 255.255.255.0
+description INTERFACE DE GERENCIAMENTO 
+exit
+interface g0/1
+switchport mode trunk 
+switchport trunk native vlan 215
+switchport trunk allowed vlan 215,782,783,784,785
+description TRUNK-RT
+no shutdown
+exit
+interface f0/1
+switchport mode access 
+switchport access vlan 782
+description PC-01
+exit
+interface f0/2
+switchport mode access 
+switchport acces vlan 783
+description PC-02
+exit
+interface f0/3
+switchport mode access 
+switchport acces vlan 784
+description PC-03
+exit
+interface f0/24
+switchport mode access 
+switchport acces vlan 785
+description SERVER
+exit
+do wr
