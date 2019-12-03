@@ -1,0 +1,44 @@
+enable
+configure terminal
+hostname RT-02
+banner motd "ACESSO APENAS PARA O Eliasaf"
+enable secret SenhadaEnable
+ip domain-name sprint3.local
+crypto key generate rsa general-keys modulus 1024
+username eliasafSilva privilege 15 secret eliasafsilva1
+line console 0
+password SenhadaConsole
+login local 
+exit
+line vty 0 15
+transport input ssh
+exec-timeout 5
+login local
+exit
+service password-encryption
+interface gigabitEthernet 0/1
+no shutdown
+exit
+interface gigabitEthernet 0/1.782
+encapsulation dot1Q 782
+ip address 172.16.20.10 255.255.255.0
+ip helper-address 172.16.20.5
+description VLAN782
+exit
+interface gigabitEthernet 0/1.783
+encapsulation dot1Q 783
+ip address 172.16.20.20 255.255.255.0
+ip helper-address 172.16.20.5
+description VLAN783
+exit
+interface gigabitEthernet 0/1.784
+encapsulation dot1Q 784
+ip address 172.16.20.30 255.255.255.0
+ip helper-address 172.16.20.5
+description VLAN784
+exit
+interface serial 0/0/0
+ip address 200.187.31.101 255.255.255.0
+ip route 192.168.14.0 255.255.255.0 200.200.100.2
+ip route 192.168.251.0 255.255.255.0 200.200.100.2
+do wr 
